@@ -11,5 +11,3 @@ game:
       default2ndPlayerUri: 'http://localhost:8080'
       healthEndpoint: '/go3/api/v1/health'
       playEndpoint: '/go3/api/v1/play'
-
-    maxRandom: 10000

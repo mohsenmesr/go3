@@ -10,5 +10,3 @@ game:
     async:
       brokerAddress: '127.0.0.1:8161'
       topic: 'player1'
-
-    maxRandom: 10000

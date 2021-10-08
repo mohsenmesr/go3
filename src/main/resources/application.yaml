@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: syncP1
+
+game:
+  settings:
+    maxRandom: 10000

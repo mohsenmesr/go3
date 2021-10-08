@@ -10,5 +10,3 @@ game:
       default2ndPlayerAddress: 'http://localhost:9090'
       healthEndpoint: '/go3/api/v1/health'
       playEndpoint: '/go3/api/v1/play'
-
-    maxRandom: 10000
