@@ -1,6 +1,6 @@
 spring:
   application:
-    name: player2
+    name: syncPlayer2
 server:
   port: 9090
 
@@ -11,9 +11,5 @@ game:
       default2ndPlayerUri: 'http://localhost:8080'
       healthEndpoint: '/go3/api/v1/health'
       playEndpoint: '/go3/api/v1/play'
-
-    async:
-      brokerAddress: '127.0.0.1:8161'
-      topic: 'player2'
 
     maxRandom: 10000

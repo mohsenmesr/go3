@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: asyncPlayer1
+server:
+  port: 8181
+
+game:
+  settings:
+
+    async:
+      brokerAddress: '127.0.0.1:8161'
+      topic: 'player1'
+
+    maxRandom: 10000

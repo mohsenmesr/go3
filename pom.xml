@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>com.takeaway</groupId>
-    <artifactId>codeChallenge</artifactId>
+    <artifactId>go3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>go3</name>
 
