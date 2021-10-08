@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @Data
 @RestController
 @ConditionalOnProperty("game.settings.sync.playEndpoint")
-public class GamePlayRest {
+public class GamePlaySyncRest {
 
     private final GameService gameService;
 
     @GetMapping(value = "${game.settings.sync.healthEndpoint}")
-    public ResponseEntity<Void> healthCheckSync(@PathVariable int initialValue) {
+    public ResponseEntity<Void> healthCheckSync() {
         return ResponseEntity.noContent().build();
     }
 
