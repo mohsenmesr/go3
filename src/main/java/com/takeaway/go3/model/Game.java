@@ -5,24 +5,21 @@ import lombok.experimental.Accessors;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Data(staticConstructor = "of")
 @Accessors(chain = true)
 public class Game {
-    private final int initialValue;
-    private final String startedBy;
-    private final String gameId = UUID.randomUUID().toString();
-    private final Date startedAt = new Date();
+    private int initialValue;
+    private String startedBy;
 
-    private LinkedList<Move> moves;
     private int currentNumber;
     private String uriToRespond;
 
-    public Game(int initialValue, String startedBy) {
-        this.initialValue = initialValue;
-        this.currentNumber = initialValue;
-        this.startedBy = startedBy;
-    }
+    private String gameId = UUID.randomUUID().toString();
+    private Date startedAt = new Date();
+    private List<Move> moves = new LinkedList<>();
+
 
 }
