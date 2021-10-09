@@ -1,5 +1,6 @@
 package com.takeaway.go3.impl;
 
+import com.takeaway.go3.error.GameException;
 import com.takeaway.go3.model.Game;
 import com.takeaway.go3.model.GameStart;
 import com.takeaway.go3.service.GameService;
@@ -15,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("asyncP1")
@@ -47,5 +49,23 @@ class AbstractGameServiceImplTest {
     void startGameSyncTest() {
         GameStart gameStart = GameStart.of();
         assertDoesNotThrow(() -> syncGameService.startGame(gameStart));
+    }
+
+    @Test
+    void playGameSyncBelowZeroErrorTest() {
+        Game gameStart = Game.of(0, "test");
+        assertThrows(GameException.class, () -> syncGameService.play(gameStart));
+    }
+
+    @Test
+    void startGameAsyncTest() {
+        GameStart gameStart = GameStart.of();
+        assertDoesNotThrow(() -> asyncGameService.startGame(gameStart));
+    }
+
+    @Test
+    void playGameAsyncTest() {
+        Game gameStart = Game.of(10, "test");
+        assertDoesNotThrow(() -> asyncGameService.play(gameStart));
     }
 }
