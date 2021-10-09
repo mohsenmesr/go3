@@ -1,4 +1,4 @@
-package com.takeaway.go3.error;
+package com.takeaway.go3.exceptions;
 
 public class GameException extends RuntimeException {
 

@@ -1,6 +1,6 @@
 package com.takeaway.go3.impl;
 
-import com.takeaway.go3.error.GameException;
+import com.takeaway.go3.exceptions.GameException;
 import com.takeaway.go3.model.Game;
 import com.takeaway.go3.model.GameStart;
 import com.takeaway.go3.service.GameService;
