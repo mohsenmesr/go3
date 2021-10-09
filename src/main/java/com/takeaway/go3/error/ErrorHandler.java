@@ -1,4 +1,4 @@
-package com.takeaway.go3.config;
+package com.takeaway.go3.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,15 +1,13 @@
 package com.takeaway.go3.impl;
 
+import com.takeaway.go3.error.GameException;
 import com.takeaway.go3.model.Game;
-import com.takeaway.go3.model.GameStart;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
@@ -17,30 +15,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Data
 @Slf4j
-@Service
-@Qualifier("sync")
+@Service("sync")
 @EqualsAndHashCode(callSuper = false)
 @ConditionalOnProperty("game.settings.sync.playEndpoint")
 public class GameSyncServiceImpl extends AbstractGameServiceImpl {
 
     private final RestTemplate restTemplate;
 
-    @Value("${game.settings.sync.healthEndpoint}")
-    private String healthEndpoint;
-
     @Value("${game.settings.sync.playEndpoint}")
     private String playEndpoint;
 
-
     @Override
-    protected String initialGame(Game game, GameStart gameRequest) {
-        final String opponentAddress = getOpponentAddress(gameRequest);
-        if (checkOtherPlayer(opponentAddress)) {
-            log.info("The game has been started!");
-            log.info("Request sent {}", game);
-            restTemplate.postForObject(opponentAddress + playEndpoint
-                    , game
-                    , String.class);
+    protected String startGameInternally(Game game) {
+        log.info("Sending Request {}", game);
+        if (postRestCall(opponentAddress + playEndpoint, game)) {
             return "The game has been started!";
         } else {
             return "The other player is not up!";
@@ -57,36 +45,29 @@ public class GameSyncServiceImpl extends AbstractGameServiceImpl {
                 .encode().toUriString();
     }
 
-    private String getOpponentAddress(GameStart gameRequest) {
-        return (StringUtils.isEmpty(gameRequest.getOtherPlayerAddress()) ?
-                defaultOtherPlayerAddress : gameRequest.getOtherPlayerAddress());
-    }
+    protected String playInternally(Game game) {
 
-    @Override
-    protected boolean checkOtherPlayer(String opponentAddress) {
-        try {
-            restTemplate.getForObject(opponentAddress + healthEndpoint
-                    , String.class);
-            log.info("Second player is active!");
-            return true;
-        } catch (Exception ex) {
-            log.error("There is no second player active!");
-            return false;
-        }
-    }
-
-    protected String sendPlayRequest(Game game) {
         final String playAddress = game.getRespondAddress() + playEndpoint;
 
         game.setRespondAddress(getRespondAddress());
 
-        log.info("Request sent {} ", game.toString());
+        log.info("Sending Request {} ", game);
 
-        restTemplate.postForObject(playAddress
-                , game
-                , String.class);
-        return "Request sent " + game.toString();
+        postRestCall(playAddress, game);
+
+        return "Request sent " + game;
     }
 
+    protected boolean postRestCall(String url, Game game) {
+        try {
+            restTemplate.postForObject(url
+                    , game
+                    , String.class);
+            return true;
+        } catch (Exception e) {
+            log.error("The other player is not up!", e);
+            throw new GameException("Other player is not accessible! on url = " + url);
+        }
+    }
 }
 

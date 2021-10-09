@@ -10,8 +10,7 @@ server:
 
 game:
   settings:
-    default2ndPlayerAddress: player1
+    opponentAddress: 'player1'
 
     async:
-      url: tcp://127.0.0.1:61616
-      topic: player2
+      topic: 'player2'

@@ -8,4 +8,4 @@ server:
 
 game:
   settings:
-    default2ndPlayerAddress: 'http://localhost:8080'
+    opponentAddress: 'http://localhost:8080'

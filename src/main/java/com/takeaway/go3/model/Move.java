@@ -13,6 +13,8 @@ import java.util.Date;
 public class Move {
     @ApiModelProperty("When move occurred")
     private Date occurredAt = new Date();
+    @ApiModelProperty("Whom made the move")
+    private String movedBy;
     @ApiModelProperty("Start value before move")
     private int startValue;
     @ApiModelProperty("Move value")

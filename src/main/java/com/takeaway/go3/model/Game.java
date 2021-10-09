@@ -15,21 +15,11 @@ import java.util.UUID;
 @ApiModel(description = "The model that will passed in every game steps")
 public class Game {
 
-    public Game(int initialValue, String startedBy) {
-        this.initialValue = initialValue;
-        this.startedBy = startedBy;
-    }
-
-    public Game() {
-        initialValue = 0;
-        startedBy = "";
-    }
-
     @ApiModelProperty(value = "The track of game moves")
     private final List<Move> moves = new LinkedList<>();
     @ApiModelProperty(required = true, value = "The initial value when game started!")
     private final int initialValue;
-    @ApiModelProperty(value = "The player name who started the game!")
+    @ApiModelProperty(value = "The player name who started the game! (just for track of starter because B2B is the main player)")
     private final String startedBy;
     @ApiModelProperty(value = "The unique game id to track it")
     private final String gameId = UUID.randomUUID().toString();
@@ -39,5 +29,15 @@ public class Game {
     private int currentNumber;
     @ApiModelProperty(required = true, value = "Which address should respond send! (it will handle systematically)")
     private String respondAddress;
+
+    public Game(int initialValue, String startedBy) {
+        this.initialValue = initialValue;
+        this.startedBy = startedBy;
+    }
+
+    public Game() {
+        initialValue = 0;
+        startedBy = "";
+    }
 
 }

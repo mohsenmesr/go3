@@ -9,7 +9,7 @@ import javax.validation.Valid;
 @Validated
 public interface GameService {
 
-    String play(Game game);
+    String play(@Valid Game game);
 
     String startGame(@Valid GameStart gameRequest);
 }

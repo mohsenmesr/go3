@@ -10,8 +10,7 @@ server:
   port: 8181
 game:
   settings:
-    default2ndPlayerAddress: player2
+    opponentAddress: 'player2'
 
     async:
-      url: tcp://127.0.0.1:61616
-      topic: player1
+      topic: 'player1'

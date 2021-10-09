@@ -1,5 +1,4 @@
 game:
   settings:
     sync:
-      healthEndpoint: '/go3/api/v1/health'
       playEndpoint: '/go3/api/v1/play'

@@ -1,6 +1,6 @@
 package com.takeaway.go3.impl;
 
-import com.takeaway.go3.GameException;
+import com.takeaway.go3.error.GameException;
 import com.takeaway.go3.model.Game;
 import com.takeaway.go3.model.GameStart;
 import com.takeaway.go3.model.Move;
@@ -8,7 +8,7 @@ import com.takeaway.go3.service.GameService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.security.SecureRandom;
 
@@ -17,40 +17,39 @@ import java.security.SecureRandom;
 public abstract class AbstractGameServiceImpl implements GameService {
 
     @Value("${spring.application.name}")
-    protected String defaultPlayerName;
+    protected String playerName;
 
     @Value("${game.settings.maxRandom}")
     protected int maxRandomRange;
 
-    @Value("${game.settings.default2ndPlayerAddress}")
-    protected String defaultOtherPlayerAddress;
+    @Value("${game.settings.opponentAddress}")
+    protected String opponentAddress;
 
     @Override
     public String startGame(GameStart gameRequest) {
         log.info("Processing game start request! {}", gameRequest);
         final Game game = getStarterGameModel(gameRequest);
         log.info("The game has been initialized! {}", game);
-        return initialGame(game, gameRequest);
+        return startGameInternally(game);
     }
 
-    protected abstract String initialGame(Game game, GameStart gameRequest);
+    protected abstract String startGameInternally(Game game);
 
     protected Game getStarterGameModel(GameStart gameRequest) {
-        final int initialNumber = gameRequest.isInitialRandomly() ?
-                new SecureRandom().nextInt(maxRandomRange)
-                : gameRequest.getInitialValue();
-        final String playerName = StringUtils.isEmpty(gameRequest.getStarterPlayerName()) ?
-                defaultPlayerName : gameRequest.getStarterPlayerName();
+        final int initialNumber = getInitialNumber(gameRequest.isInitialRandomly(), gameRequest.getInitialValue());
+        final String playerName = this.playerName;
         return Game.of(initialNumber, playerName)
                 .setCurrentNumber(initialNumber)
                 .setRespondAddress(getRespondAddress());
     }
 
-    protected abstract String getRespondAddress();
-
-    protected boolean checkOtherPlayer(String opponentAddress) {
-        return true;
+    protected int getInitialNumber(boolean doRandomly, Integer initialValue) {
+        return doRandomly || ObjectUtils.isEmpty(initialValue) ?
+                new SecureRandom().nextInt(maxRandomRange)
+                : initialValue;
     }
+
+    protected abstract String getRespondAddress();
 
     @Override
     public String play(Game game) {
@@ -60,23 +59,18 @@ public abstract class AbstractGameServiceImpl implements GameService {
         final Move nextMove = getNextMove(game.getCurrentNumber());
 
         game.setCurrentNumber(nextMove.getFinalValue())
-                .getMoves().add(nextMove);
+                .getMoves().add(nextMove.setMovedBy(playerName));
 
         if (game.getCurrentNumber() == 1) {
             log.info("You are the winner!!");
             return "You are the winner!!";
         }
 
-        if (!checkOtherPlayer(game.getRespondAddress())) {
-            log.error("second player is not active anymore! The game has been ended!!");
-            return "second player is not active anymore!";
-        }
-
-        return sendPlayRequest(game);
+        return playInternally(game);
 
     }
 
-    protected abstract String sendPlayRequest(Game game);
+    protected abstract String playInternally(Game game);
 
     protected Move getNextMove(int currentNumber) {
 
