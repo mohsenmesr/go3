@@ -3,9 +3,10 @@
 Game Of Three Take Away Code Challenge by Mohsen Mesrzadeh
 _**mohsenmesr@yahoo.com**_
 
-This game has two different modes of running at all:
+This game has two different modes of running as the following:
 
 - Sync Mode: Based on REST calls, both players (apps) should be online and play with each other simultaneously
+
 
 - Async Mode: Based on ActiveMQ broker, One player start the game and push its request to player2 topic and when other
   one get online, it will process the game and push again in requested topic in game-request hence everything handled
@@ -17,7 +18,7 @@ file
 e.g. Before starting run command
 `mvn clean package
 `to prepare your artifact, hence you will be able to mount that in a java8+ docker image or by running various commands
-as below:
+as below (All services has their own swagger-ui documentation):
 
 **Note:** Async players can start the game in the Sync-Mode as well, if both players were up
 
