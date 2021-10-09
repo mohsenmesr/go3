@@ -1,13 +1,17 @@
 spring:
+
   application:
     name: asyncPlayer1
+
+  profiles:
+    include: async
+
 server:
   port: 8181
-
 game:
   settings:
-    default2ndPlayerAddress: 'player2'
+    default2ndPlayerAddress: player2
 
     async:
-      brokerAddress: '127.0.0.1:8161'
-      topic: 'player1'
+      url: tcp://127.0.0.1:61616
+      topic: player1

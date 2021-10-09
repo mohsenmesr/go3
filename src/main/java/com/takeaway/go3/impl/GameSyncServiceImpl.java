@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
@@ -19,7 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 @Qualifier("sync")
 @EqualsAndHashCode(callSuper = false)
-public class GameServiceImpl extends AbstractGameServiceImpl {
+@ConditionalOnProperty("game.settings.sync.playEndpoint")
+public class GameSyncServiceImpl extends AbstractGameServiceImpl {
 
     private final RestTemplate restTemplate;
 

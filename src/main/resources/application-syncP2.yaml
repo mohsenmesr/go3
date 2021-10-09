@@ -1,12 +1,11 @@
 spring:
   application:
     name: syncPlayer2
+  profiles:
+    include: sync
 server:
   port: 9090
 
 game:
   settings:
     default2ndPlayerAddress: 'http://localhost:8080'
-    sync:
-      healthEndpoint: '/go3/api/v1/health'
-      playEndpoint: '/go3/api/v1/play'

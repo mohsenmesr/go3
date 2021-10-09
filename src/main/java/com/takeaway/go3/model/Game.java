@@ -15,6 +15,16 @@ import java.util.UUID;
 @ApiModel(description = "The model that will passed in every game steps")
 public class Game {
 
+    public Game(int initialValue, String startedBy) {
+        this.initialValue = initialValue;
+        this.startedBy = startedBy;
+    }
+
+    public Game() {
+        initialValue = 0;
+        startedBy = "";
+    }
+
     @ApiModelProperty(value = "The track of game moves")
     private final List<Move> moves = new LinkedList<>();
     @ApiModelProperty(required = true, value = "The initial value when game started!")
