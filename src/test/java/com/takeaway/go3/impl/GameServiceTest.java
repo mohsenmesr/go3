@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("asyncP1")
-class AbstractGameServiceImplTest {
+class GameServiceTest {
 
     @Autowired()
     @Qualifier("sync")
