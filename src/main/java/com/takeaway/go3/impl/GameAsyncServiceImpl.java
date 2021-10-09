@@ -41,13 +41,13 @@ public class GameAsyncServiceImpl extends AbstractGameServiceImpl {
     }
 
     protected String playInternally(Game game) {
-        final String playAddress = game.getRespondAddress();
+        final String respondDestination = game.getRespondAddress();
 
         game.setRespondAddress(getRespondAddress());
 
         log.info("Request sent {} ", game);
 
-        jmsTemplate.convertAndSend(playAddress, game);
+        jmsTemplate.convertAndSend(respondDestination, game);
 
         return "Request sent " + game;
     }

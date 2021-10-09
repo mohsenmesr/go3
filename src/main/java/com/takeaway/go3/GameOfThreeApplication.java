@@ -22,7 +22,7 @@ public class GameOfThreeApplication {
     }
 
     @Bean
-    public MessageConverter jacksonJmsMessageConverter() {
+    public MessageConverter getMessageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.BYTES);
         converter.setTypeIdPropertyName("_type");
