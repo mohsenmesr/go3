@@ -14,11 +14,12 @@ This game has two different modes of running at all:
 You can find steps of how to run Sync-Service and Async-Service(via ActiveMQ) in two script.sh file beside the pom.xml
 file
 
-e.g. Before starting run
+e.g. Before starting run command
 `mvn clean package
-`then you can run your artifact in a java8+ docker image or by running various commands as below:
+`to prepare your artifact, hence you will be able to mount that in a java8+ docker image or by running various commands
+as below:
 
-**Note:** Async players can start the game in the Sync-Mode if both players were up
+**Note:** Async players can start the game in the Sync-Mode as well, if both players were up
 
 **Sync-Player1:**
 
