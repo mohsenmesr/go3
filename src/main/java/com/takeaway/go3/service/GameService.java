@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 
 @Validated
-public interface SyncGameService {
+public interface GameService {
 
     String startGame(@Valid GameStart gameRequest);
 

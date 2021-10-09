@@ -6,6 +6,7 @@ server:
 
 game:
   settings:
+    default2ndPlayerAddress: 'player2'
 
     async:
       brokerAddress: '127.0.0.1:8161'

@@ -2,7 +2,7 @@ package com.takeaway.go3.rest;
 
 import com.takeaway.go3.model.Game;
 import com.takeaway.go3.model.GameStart;
-import com.takeaway.go3.service.SyncGameService;
+import com.takeaway.go3.service.GameService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ConditionalOnProperty("game.settings.sync.playEndpoint")
 public class GameSyncRest {
 
-    private final SyncGameService syncGameService;
+    private final GameService gameService;
 
     @ApiOperation(value = "start-game-in-sync-mode"
             , notes = "Start a game in sync mode and other user should be up to handle requests")
@@ -26,7 +26,7 @@ public class GameSyncRest {
     public ResponseEntity<String> startSync(
             @ApiParam(required = true, value = "Details of game request")
             @RequestBody GameStart gameRequest) {
-        return ResponseEntity.ok(syncGameService.startGame(gameRequest));
+        return ResponseEntity.ok(gameService.startGame(gameRequest));
     }
 
     @GetMapping(value = "${game.settings.sync.healthEndpoint}")
@@ -36,6 +36,6 @@ public class GameSyncRest {
 
     @PostMapping(value = "${game.settings.sync.playEndpoint}")
     public ResponseEntity<String> playSync(@RequestBody Game game) {
-        return ResponseEntity.ok(syncGameService.play(game));
+        return ResponseEntity.ok(gameService.play(game));
     }
 }
