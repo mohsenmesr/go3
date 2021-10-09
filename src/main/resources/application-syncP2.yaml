@@ -6,8 +6,7 @@ server:
 
 game:
   settings:
-
     sync:
-      default2ndPlayerUri: 'http://localhost:8080'
+      default2ndPlayerAddress: 'http://localhost:8080'
       healthEndpoint: '/go3/api/v1/health'
       playEndpoint: '/go3/api/v1/play'
